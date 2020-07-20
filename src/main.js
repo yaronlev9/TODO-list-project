@@ -10,13 +10,13 @@ counter.innerHTML = openTasks.length;
 
 
 function addTask(event){
-    if (document.getElementById('textInput').value != "" && document.getElementById('dueDate').value != "" && document.getElementById('prioritySelector').value != ""){
+    if (document.getElementById('textInput').value != "" && document.getElementById('prioritySelector').value != ""){
         let dateObj = new Date();
         date = formatDate(dateObj);
         let task = {text:document.getElementById('textInput').value, date:date, dueDate:document.getElementById('dueDate').value, priority:document.getElementById('prioritySelector').value, addedDate: dateObj};
         addToList(task, openTasks.length, "view-section");
         openTasks.push(task);
-        counter.innerHTML = openTasks.length;
+        counter.innerText = openTasks.length;
         document.getElementById('textInput').value = "";
         document.getElementById('dueDate').value = "";
         document.getElementById('prioritySelector').value = "";
@@ -69,29 +69,37 @@ function formatDate(date){
 
 function addToList(toAdd, i, sectionStr){
     let section = document.getElementById(sectionStr);
+    let section_child = section.firstElementChild;
+    let item = document.createElement("li");
     let mainDiv = document.createElement("div");
     mainDiv.classList.add("todoContainer"); 
     mainDiv.setAttribute("name", i);
-    section.appendChild(mainDiv);
-    let lst = document.createElement("ul");
-    lst.setAttribute("id", "taskProperties");
-    mainDiv.appendChild(lst);
-    createPropDiv(toAdd.priority, lst, "priority");
-    createPropDiv(toAdd.date, lst, "todoCreatedAt");
-    createPropDiv(toAdd.dueDate, lst, "todoDueDate");
-    createPropDiv(toAdd.text, lst, "todoText");
+    section_child.appendChild(item);
+    item.appendChild(mainDiv);
+    // let lst = document.createElement("ul");
+    mainDiv.setAttribute("id", "taskProperties");
+    // mainDiv.appendChild(lst);
+    createPropDiv(toAdd.priority, mainDiv, "todoPriority");
+    createPropDiv(toAdd.date, mainDiv, "todoCreatedAt");
+    if (toAdd.dueDate ===  ''){
+        createPropDiv("NA", mainDiv, "todoDueDate");
+    }
+    else{
+        createPropDiv(toAdd.dueDate, mainDiv, "todoDueDate");
+    }
+    createPropDiv(toAdd.text, mainDiv, "todoText");
     if (sectionStr === "view-section"){
         let myDiv = document.createElement("div");
         createButton(myDiv, "removeButton", "fa fa-trash");
         createButton(myDiv, "completeButton", "fa fa-check");
-        lst.appendChild(myDiv);
+        mainDiv.appendChild(myDiv);
     }
 }
 
 function createPropDiv(toAdd, lst, string){
     let myDiv = document.createElement("div");
     myDiv.setAttribute("class", string);
-    myDiv.innerHTML = toAdd;
+    myDiv.innerText = toAdd;
     lst.appendChild(myDiv);
 }
 
@@ -113,30 +121,34 @@ function createButton(myDiv, string1, string2){
 }
 
 function removeFromList(event){
-    let index = this.parentElement.parentElement.parentElement.getAttribute("name");
+    let index = this.parentElement.parentElement.getAttribute("name");
     let el = this.parentElement.parentElement.parentElement;
+    console.log(el);
     el.remove();
     openTasks.splice(index, 1);
-    counter.innerHTML = openTasks.length;
+    counter.innerText = openTasks.length;
     updateIndexes();
 }
 
 function addToCompleteList(event){
-    let index = this.parentElement.parentElement.parentElement.getAttribute("name");
+    let index = this.parentElement.parentElement.getAttribute("name");
     let el = this.parentElement.parentElement.parentElement;
     el.remove();
     let task = openTasks[index];
+    console.log(index);
     addToList(task, completedTasks.length, "completed-section"); 
     openTasks.splice(index, 1);
-    counter.innerHTML = openTasks.length;
+    counter.innerText = openTasks.length;
     updateIndexes();
 }
 
 function updateIndexes(){
     let section = document.getElementById("view-section");
-    let arr = section.childNodes;
-    for (let i = 1; i < arr.length; i++){
-        arr[i].setAttribute("name", i-1);
+    let arr = section.firstElementChild.childNodes;
+    console.log(arr);
+    for (let i = 0; i < arr.length; i++){
+        arr[i].childNodes[0].setAttribute("name", i);
+        console.log(arr[i].childNodes[0]);
     }
     console.log(arr);
 }
