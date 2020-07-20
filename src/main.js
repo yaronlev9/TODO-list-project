@@ -1,8 +1,6 @@
 let openTasks = [];
 let completedTasks = [];
-function loadTasks(openTasks) {
-    section = document.getElementById("view-section");
-}
+// create all events of buttons
 let addBtn = document.getElementById('addButton');
 addBtn.addEventListener('click',addTask);
 let sortBtn = document.getElementById('sortButton');
@@ -11,18 +9,21 @@ sortBtn = document.getElementById('sortByDate');
 sortBtn.addEventListener('click',sortByDueDate);
 let clearBtn = document.getElementById('clearList');
 clearBtn.addEventListener('click',deleteLst);
+
+// start the counter of the tasks
 let counter = document.getElementById('counter');
 counter.innerHTML = openTasks.length;
 
-
+// adds the text with the input given to the list
 function addTask(event){
     if (document.getElementById('textInput').value != "" && document.getElementById('prioritySelector').value != ""){
         let dateObj = new Date();
         date = formatDate(dateObj);
-        let task = {text:document.getElementById('textInput').value, date:date, dueDate:document.getElementById('dueDate').value, priority:document.getElementById('prioritySelector').value, addedDate: dateObj};
+        let task = {text:document.getElementById('textInput').value, date:date, dueDate:document.getElementById('dueDate').value, priority:document.getElementById('prioritySelector').value};
         addToList(task, openTasks.length, "view-section");
         openTasks.push(task);
         counter.innerText = openTasks.length;
+        // makes all the inputs default
         document.getElementById('textInput').value = "";
         document.getElementById('dueDate').value = "";
         document.getElementById('prioritySelector').value = "";
@@ -32,6 +33,7 @@ function addTask(event){
     }
 }
 
+// formats the date and time when the task was given to the correct format
 function formatDate(date){
     let newDate = `${date.getFullYear()}-`;
     let month = date.getMonth();
@@ -72,9 +74,9 @@ function formatDate(date){
     return newDate;
 }
 
+// creates html code in the correct format with the properties of the task
 function addToList(toAdd, i, sectionStr){
-    let section = document.getElementById(sectionStr);
-    let section_child = section.firstElementChild;
+    let section_child = document.getElementById(sectionStr).firstElementChild;
     let item = document.createElement("li");
     let mainDiv = document.createElement("div");
     mainDiv.classList.add("todoContainer"); 
@@ -99,6 +101,7 @@ function addToList(toAdd, i, sectionStr){
     }
 }
 
+// gets the property and creates a div with the property
 function createPropDiv(toAdd, lst, string){
     let myDiv = document.createElement("div");
     myDiv.setAttribute("class", string);
@@ -106,6 +109,7 @@ function createPropDiv(toAdd, lst, string){
     lst.appendChild(myDiv);
 }
 
+// creates the trash and check buttons
 function createButton(myDiv, string1, string2){
     let button = document.createElement("button");
     myDiv.appendChild(button);
@@ -123,6 +127,7 @@ function createButton(myDiv, string1, string2){
     }
 }
 
+// removes the task from list
 function removeFromList(event){
     let index = this.parentElement.parentElement.getAttribute("name");
     let el = this.parentElement.parentElement.parentElement;
@@ -132,6 +137,7 @@ function removeFromList(event){
     updateIndexes();
 }
 
+// adds the task to the completed tasks list
 function addToCompleteList(event){
     let index = this.parentElement.parentElement.getAttribute("name");
     let el = this.parentElement.parentElement.parentElement;
@@ -143,6 +149,7 @@ function addToCompleteList(event){
     updateIndexes();
 }
 
+// updates the indexes of the tasks by their order in the list
 function updateIndexes(){
     let section = document.getElementById("view-section");
     let arr = section.firstElementChild.childNodes;
@@ -151,11 +158,13 @@ function updateIndexes(){
     }
 }
 
+// sorts the tasks by priority
 function sortByPriority(event){
     openTasks.sort((a, b) => (a.priority > b.priority) ? -1 : 1);
     reArrangeLst();
 }
 
+// sorts the tasks by the due date
 function sortByDueDate(){
     let counter = openTasks.length - 1;
     let i = 0;
@@ -181,6 +190,7 @@ function sortByDueDate(){
     reArrangeLst();
 }
 
+// re arranges the list by the new sorted order
 function reArrangeLst(){
     let myLst = document.getElementById('view-section').children[0];
     myLst.remove();
@@ -192,6 +202,7 @@ function reArrangeLst(){
     }
 }
 
+// deletes the entire list
 function deleteLst(){
     openTasks = [];
     counter.innerText = openTasks.length;
