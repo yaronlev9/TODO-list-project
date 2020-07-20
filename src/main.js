@@ -4,17 +4,16 @@ function loadTasks(openTasks) {
     section = document.getElementById("view-section");
 }
 addBtn = document.getElementById('addButton');
-if(addBtn){
-    addBtn.addEventListener('click',addTask);
-  }
+addBtn.addEventListener('click',addTask);
+
 
 function addTask(event){
     if (document.getElementById('textInput').value != "" && document.getElementById('dueDate').value != "" && document.getElementById('prioritySelector').value != ""){
         let dateObj = new Date();
         date = formatDate(dateObj);
         let task = {text:document.getElementById('textInput').value, date:date, dueDate:document.getElementById('dueDate').value, priority:document.getElementById('prioritySelector').value, addedDate: dateObj};
-        openTasks.push(task);
         addToList(task, openTasks.length, "view-section");
+        openTasks.push(task);
         document.getElementById('textInput').value = "";
         document.getElementById('dueDate').value = "";
         document.getElementById('prioritySelector').value = "";
@@ -77,10 +76,12 @@ function addToList(toAdd, i, sectionStr){
     createPropDiv(toAdd.date, lst, "todoCreatedAt");
     createPropDiv(toAdd.dueDate, lst, "todoDueDate");
     createPropDiv(toAdd.text, lst, "todoText");
-    let myDiv = document.createElement("div");
-    createButton(myDiv, "removeButton", "fa fa-trash");
-    createButton(myDiv, "completeButton", "fa fa-check");
-    lst.appendChild(myDiv);
+    if (sectionStr === "view-section"){
+        let myDiv = document.createElement("div");
+        createButton(myDiv, "removeButton", "fa fa-trash");
+        createButton(myDiv, "completeButton", "fa fa-check");
+        lst.appendChild(myDiv);
+    }
     section.appendChild(mainDiv);
 }
 
@@ -100,4 +101,23 @@ function createButton(myDiv, string1, string2){
     button.appendChild(el);
     el.setAttribute("class", string2);
     el.setAttribute("type", "button");
+    if (string1 === "removeButton"){
+        button.addEventListener('click',removeFromList);
+    }
+    else{
+        button.addEventListener('click',addToCompleteList);
+    }
+}
+
+function removeFromList(event){
+    let el = this.parentElement.parentElement.parentElement;
+    el.remove();
+}
+
+function addToCompleteList(event){
+    let index = this.parentElement.parentElement.parentElement.getAttribute("name");
+    let el = this.parentElement.parentElement.parentElement;
+    el.remove();
+    let task = openTasks[index];
+    addToList(task, completedTasks.length, "completed-section"); 
 }
