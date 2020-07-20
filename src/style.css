@@ -114,3 +114,7 @@ ul {
     padding: 0;
 }
 
+#clearList {
+    background-color: hsl(0, 97%, 47%);
+}
+

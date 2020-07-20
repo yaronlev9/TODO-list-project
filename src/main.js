@@ -9,6 +9,8 @@ let sortBtn = document.getElementById('sortButton');
 sortBtn.addEventListener('click',sortByPriority);
 sortBtn = document.getElementById('sortByDate');
 sortBtn.addEventListener('click',sortByDueDate);
+let clearBtn = document.getElementById('clearList');
+clearBtn.addEventListener('click',deleteLst);
 let counter = document.getElementById('counter');
 counter.innerHTML = openTasks.length;
 
@@ -24,7 +26,6 @@ function addTask(event){
         document.getElementById('textInput').value = "";
         document.getElementById('dueDate').value = "";
         document.getElementById('prioritySelector').value = "";
-        console.log(openTasks);
     }
     else{
         console.error("missing input");
@@ -125,7 +126,6 @@ function createButton(myDiv, string1, string2){
 function removeFromList(event){
     let index = this.parentElement.parentElement.getAttribute("name");
     let el = this.parentElement.parentElement.parentElement;
-    console.log(el);
     el.remove();
     openTasks.splice(index, 1);
     counter.innerText = openTasks.length;
@@ -137,7 +137,6 @@ function addToCompleteList(event){
     let el = this.parentElement.parentElement.parentElement;
     el.remove();
     let task = openTasks[index];
-    console.log(index);
     addToList(task, completedTasks.length, "completed-section"); 
     openTasks.splice(index, 1);
     counter.innerText = openTasks.length;
@@ -147,22 +146,38 @@ function addToCompleteList(event){
 function updateIndexes(){
     let section = document.getElementById("view-section");
     let arr = section.firstElementChild.childNodes;
-    console.log(arr);
     for (let i = 0; i < arr.length; i++){
         arr[i].childNodes[0].setAttribute("name", i);
-        console.log(arr[i].childNodes[0]);
     }
-    console.log(arr);
 }
 
 function sortByPriority(event){
-    openTasks.sort((a, b) => (a.priority >= b.priority) ? 1 : -1);
+    openTasks.sort((a, b) => (a.priority > b.priority) ? -1 : 1);
     reArrangeLst();
 }
 
 function sortByDueDate(){
+    let counter = openTasks.length - 1;
+    let i = 0;
+    while (i < counter){
+        if (openTasks[i].dueDate === ""){
+            if (openTasks[counter].dueDate === ""){
+                counter --;
+            }
+            else{
+                temp = openTasks[i];
+                openTasks[i] = openTasks[counter];
+                openTasks[counter] = temp;
+                counter--;
+                i++;
+            }
+        }
+        else {
+            i++;
+        }
+    }
     openTasks.sort((a, b) => (a.dueDate.split('-')[1] > b.dueDate.split('-')[1]) ? -1 : (a.dueDate.split('-')[1] === b.dueDate.split('-')[1]) ? 
-    ((a.dueDate.split('-')[2] >= b.dueDate.split('-')[2]) ? -1 : 1) : 1);
+    ((a.dueDate.split('-')[2] > b.dueDate.split('-')[2]) ? -1 : 1) : 1);
     reArrangeLst();
 }
 
@@ -175,4 +190,10 @@ function reArrangeLst(){
     for (let i = 0; i < openTasks.length; i++){
         addToList(openTasks[i], i, "view-section");
     }
+}
+
+function deleteLst(){
+    openTasks = [];
+    counter.innerText = openTasks.length;
+    reArrangeLst();
 }
