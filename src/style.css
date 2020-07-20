@@ -1,9 +1,19 @@
+:root{
+    --main-font: Courier New, monospace;
+}
+
 h1{
     text-align: center;
     color: hsl(141, 67%, 59%);
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
-    font-family: Courier New, monospace;
+    font-family: var(--main-font);
   }
+
+h2{
+    margin-left: 15px;
+    font-family: var(--main-font);
+}
+
 body{
 background-image: url("https://previews.123rf.com/images/vkulieva/vkulieva1602/vkulieva160200007/52452427-seamless-pattern-for-todo-list-universal-background.jpg");
     background-size: cover;
@@ -12,14 +22,14 @@ background-image: url("https://previews.123rf.com/images/vkulieva/vkulieva1602/v
 }
 
 main{
-    width: 550px;
+    width: 900px;
     background-image: linear-gradient(to right, lightgreen, yellow);
-    margin-left: 665px;
+    margin-left: 500px;
     margin-right: 500px;
     border: 3px solid black;
     }
 
-[type="text"], #prioritySelector{
+[type="text"], #prioritySelector, [type="date"]{
     margin-top: 15px;
     margin-left: 10px;
     border-radius: 4px;
@@ -28,19 +38,18 @@ main{
 
 .todoContainer {
     margin-left: 15px;
-    width: 550px;
-    height: 30px;
+    width: 800px;
+    height: 50px;
     overflow-x: auto;
     overflow-y: hidden;
 }
 
 #taskProperties {
     list-style: none;
-    width: 550px;
-    height: 20px;
+    width: 800px;
+    height: 50px;
     margin: 0;
     padding: 0;
-    overflow: auto;
 }
 
 #taskProperties > [class="priority"] {
@@ -48,14 +57,15 @@ main{
     width: 30px;
 }
 
-#taskProperties > [class="todoCreatedAt"] {
+#taskProperties > [class="todoCreatedAt"], [class="todoDueDate"] {
     float: left;
     width: 150px;
 }
 
 #taskProperties > [class="todoText"] {
     float: left;
-    width: 300px;
+    width: 350px;
+    overflow: auto;
 }
 
 button {
@@ -77,3 +87,23 @@ button:hover{
     color: #000000;
     background-color: #FFFFFF;
 }
+
+.btn {
+    border-radius: 50px;
+    background-color: lightgreen;
+    border: none;
+    color: white;
+    padding: 10px 14px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .btn:hover {
+    background-color: green;
+  }
+
+  .btn:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
+
