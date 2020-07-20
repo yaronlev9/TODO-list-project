@@ -5,6 +5,8 @@ function loadTasks(openTasks) {
 }
 addBtn = document.getElementById('addButton');
 addBtn.addEventListener('click',addTask);
+let counter = document.getElementById('counter');
+counter.innerHTML = openTasks.length;
 
 
 function addTask(event){
@@ -14,6 +16,7 @@ function addTask(event){
         let task = {text:document.getElementById('textInput').value, date:date, dueDate:document.getElementById('dueDate').value, priority:document.getElementById('prioritySelector').value, addedDate: dateObj};
         addToList(task, openTasks.length, "view-section");
         openTasks.push(task);
+        counter.innerHTML = openTasks.length;
         document.getElementById('textInput').value = "";
         document.getElementById('dueDate').value = "";
         document.getElementById('prioritySelector').value = "";
@@ -69,6 +72,7 @@ function addToList(toAdd, i, sectionStr){
     let mainDiv = document.createElement("div");
     mainDiv.classList.add("todoContainer"); 
     mainDiv.setAttribute("name", i);
+    section.appendChild(mainDiv);
     let lst = document.createElement("ul");
     lst.setAttribute("id", "taskProperties");
     mainDiv.appendChild(lst);
@@ -82,7 +86,6 @@ function addToList(toAdd, i, sectionStr){
         createButton(myDiv, "completeButton", "fa fa-check");
         lst.appendChild(myDiv);
     }
-    section.appendChild(mainDiv);
 }
 
 function createPropDiv(toAdd, lst, string){
@@ -110,8 +113,12 @@ function createButton(myDiv, string1, string2){
 }
 
 function removeFromList(event){
+    let index = this.parentElement.parentElement.parentElement.getAttribute("name");
     let el = this.parentElement.parentElement.parentElement;
     el.remove();
+    openTasks.splice(index, 1);
+    counter.innerHTML = openTasks.length;
+    updateIndexes();
 }
 
 function addToCompleteList(event){
@@ -120,4 +127,16 @@ function addToCompleteList(event){
     el.remove();
     let task = openTasks[index];
     addToList(task, completedTasks.length, "completed-section"); 
+    openTasks.splice(index, 1);
+    counter.innerHTML = openTasks.length;
+    updateIndexes();
+}
+
+function updateIndexes(){
+    let section = document.getElementById("view-section");
+    let arr = section.childNodes;
+    for (let i = 1; i < arr.length; i++){
+        arr[i].setAttribute("name", i-1);
+    }
+    console.log(arr);
 }
