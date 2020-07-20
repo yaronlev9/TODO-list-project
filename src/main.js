@@ -1,5 +1,8 @@
-let openTasks = [];
-let completedTasks = [];
+// get info from local storage
+let data = localStorage.getItem('todoList') ? JSON.parse(localStorage.getItem('todoList')):{
+    openTasks: [],
+    completedTasks: []
+  };
 // create all events of buttons
 let addBtn = document.getElementById('addButton');
 addBtn.addEventListener('click',addTask);
@@ -9,10 +12,22 @@ sortBtn = document.getElementById('sortByDate');
 sortBtn.addEventListener('click',sortByDueDate);
 let clearBtn = document.getElementById('clearList');
 clearBtn.addEventListener('click',deleteLst);
+showTasks();
+
 
 // start the counter of the tasks
 let counter = document.getElementById('counter');
-counter.innerHTML = openTasks.length;
+counter.innerHTML = data.openTasks.length;
+
+// shows all the tasks that were already assigned before
+function showTasks(){
+    for (let i = 0; i < data.openTasks.length; i++){
+        addToList(data.openTasks[i], i, "view-section");
+    }
+    for (let i = 0; i < data.completedTasks.length; i++){
+        addToList(data.completedTasks[i], i, "completed-section");
+    }
+}
 
 // adds the text with the input given to the list
 function addTask(event){
@@ -20,9 +35,10 @@ function addTask(event){
         let dateObj = new Date();
         date = formatDate(dateObj);
         let task = {text:document.getElementById('textInput').value, date:date, dueDate:document.getElementById('dueDate').value, priority:document.getElementById('prioritySelector').value};
-        addToList(task, openTasks.length, "view-section");
-        openTasks.push(task);
-        counter.innerText = openTasks.length;
+        addToList(task, data.openTasks.length, "view-section");
+        data.openTasks.push(task);
+        localStorage.setItem('todoList', JSON.stringify(data));
+        counter.innerText = data.openTasks.length;
         // makes all the inputs default
         document.getElementById('textInput').value = "";
         document.getElementById('dueDate').value = "";
@@ -132,8 +148,9 @@ function removeFromList(event){
     let index = this.parentElement.parentElement.getAttribute("name");
     let el = this.parentElement.parentElement.parentElement;
     el.remove();
-    openTasks.splice(index, 1);
-    counter.innerText = openTasks.length;
+    data.openTasks.splice(index, 1);
+    localStorage.setItem('todoList', JSON.stringify(data));
+    counter.innerText = data.openTasks.length;
     updateIndexes();
 }
 
@@ -142,11 +159,14 @@ function addToCompleteList(event){
     let index = this.parentElement.parentElement.getAttribute("name");
     let el = this.parentElement.parentElement.parentElement;
     el.remove();
-    let task = openTasks[index];
-    addToList(task, completedTasks.length, "completed-section"); 
-    openTasks.splice(index, 1);
-    counter.innerText = openTasks.length;
+    let task = data.openTasks[index];
+    data.completedTasks.push(task);
+    console.log(data.completedTasks);
+    addToList(task, data.completedTasks.length, "completed-section"); 
+    data.openTasks.splice(index, 1);
+    counter.innerText = data.openTasks.length;
     updateIndexes();
+    localStorage.setItem('todoList', JSON.stringify(data));
 }
 
 // updates the indexes of the tasks by their order in the list
@@ -160,23 +180,23 @@ function updateIndexes(){
 
 // sorts the tasks by priority
 function sortByPriority(event){
-    openTasks.sort((a, b) => (a.priority > b.priority) ? -1 : 1);
+    data.openTasks.sort((a, b) => (a.priority > b.priority) ? -1 : 1);
     reArrangeLst();
 }
 
 // sorts the tasks by the due date
 function sortByDueDate(){
-    let counter = openTasks.length - 1;
+    let counter = data.openTasks.length - 1;
     let i = 0;
     while (i < counter){
-        if (openTasks[i].dueDate === ""){
-            if (openTasks[counter].dueDate === ""){
+        if (data.openTasks[i].dueDate === ""){
+            if (data.openTasks[counter].dueDate === ""){
                 counter --;
             }
             else{
-                temp = openTasks[i];
-                openTasks[i] = openTasks[counter];
-                openTasks[counter] = temp;
+                temp = data.openTasks[i];
+                data.openTasks[i] = data.openTasks[counter];
+                data.openTasks[counter] = temp;
                 counter--;
                 i++;
             }
@@ -185,7 +205,7 @@ function sortByDueDate(){
             i++;
         }
     }
-    openTasks.sort((a, b) => (a.dueDate.split('-')[1] > b.dueDate.split('-')[1]) ? -1 : (a.dueDate.split('-')[1] === b.dueDate.split('-')[1]) ? 
+    data.openTasks.sort((a, b) => (a.dueDate.split('-')[1] > b.dueDate.split('-')[1]) ? -1 : (a.dueDate.split('-')[1] === b.dueDate.split('-')[1]) ? 
     ((a.dueDate.split('-')[2] > b.dueDate.split('-')[2]) ? -1 : 1) : 1);
     reArrangeLst();
 }
@@ -197,14 +217,15 @@ function reArrangeLst(){
     let newLst = document.createElement("ul");
     let section =  document.getElementById('view-section');
     section.appendChild(newLst);
-    for (let i = 0; i < openTasks.length; i++){
-        addToList(openTasks[i], i, "view-section");
+    for (let i = 0; i < data.openTasks.length; i++){
+        addToList(data.openTasks[i], i, "view-section");
     }
 }
 
 // deletes the entire list
 function deleteLst(){
-    openTasks = [];
-    counter.innerText = openTasks.length;
+    data.openTasks = [];
+    counter.innerText = data.openTasks.length;
     reArrangeLst();
+    localStorage.setItem('todoList', JSON.stringify(data));
 }
