@@ -30,7 +30,8 @@
                 <option value="5">5</option>
             </select>
             <label for="dueDate">Due by:</label>
-            <input type="date" id="dueDate" name="task-dueDate" value="" min="2020-01-01" max="2020-12-31">
+            <input type="date" id="dueDate" name="task-dueDate" value="" min="" max="2020-12-31">
+            <script>dueDate.min = new Date().toISOString().split("T")[0];</script>
             <button id="addButton" type="button">Add to tasks</button>
         </section>
         <br>
@@ -38,22 +39,6 @@
         </section>
         <section id="completed-section">
             <h2><u>Tasks Completed:</u></h2>
-                <div div class="todoContainer" name="1">
-                    <ul id="taskProperties">
-                        <div class="priority">1</div>
-                        <div class="todoCreatedAt"> 2020-06-18 11:51:12</div>
-                        <div class="todoDueDate">2020-08-18 01:31:42</div>
-                        <div class="todoText">todo text</div>
-                    </ul>
-                </div>
-                <div div class="todoContainer" name="2">
-                    <ul id="taskProperties">
-                        <div class="priority">1</div>
-                        <div class="todoCreatedAt"> 2020-06-18 11:51:12</div>
-                        <div class="todoDueDate">2020-08-18 01:31:42</div>
-                        <div class="todoText">todo texdddddddddddddddd </div>
-                    </ul>
-                </div>
         </section>
         <script type="text/javascript" src="main.js"></script>
     </main>
