@@ -11,9 +11,10 @@ if(addBtn){
 function addTask(event){
     if (document.getElementById('textInput').value != "" && document.getElementById('dueDate').value != "" && document.getElementById('prioritySelector').value != ""){
         let dateObj = new Date();
-        date = formatDate(date);
+        date = formatDate(dateObj);
         let task = {text:document.getElementById('textInput').value, date:date, dueDate:document.getElementById('dueDate').value, priority:document.getElementById('prioritySelector').value, addedDate: dateObj};
         openTasks.push(task);
+        addToList(task, openTasks.length, "view-section");
         document.getElementById('textInput').value = "";
         document.getElementById('dueDate').value = "";
         document.getElementById('prioritySelector').value = "";
@@ -62,4 +63,41 @@ function formatDate(date){
         newDate += `${date.getSeconds()}`;
     }
     return newDate;
+}
+
+function addToList(toAdd, i, sectionStr){
+    let section = document.getElementById(sectionStr);
+    let mainDiv = document.createElement("div");
+    mainDiv.classList.add("todoContainer"); 
+    mainDiv.setAttribute("name", i);
+    let lst = document.createElement("ul");
+    lst.setAttribute("id", "taskProperties");
+    mainDiv.appendChild(lst);
+    createPropDiv(toAdd.priority, lst, "priority");
+    createPropDiv(toAdd.date, lst, "todoCreatedAt");
+    createPropDiv(toAdd.dueDate, lst, "todoDueDate");
+    createPropDiv(toAdd.text, lst, "todoText");
+    let myDiv = document.createElement("div");
+    createButton(myDiv, "removeButton", "fa fa-trash");
+    createButton(myDiv, "completeButton", "fa fa-check");
+    lst.appendChild(myDiv);
+    section.appendChild(mainDiv);
+}
+
+function createPropDiv(toAdd, lst, string){
+    let myDiv = document.createElement("div");
+    myDiv.setAttribute("class", string);
+    myDiv.innerHTML = toAdd;
+    lst.appendChild(myDiv);
+}
+
+function createButton(myDiv, string1, string2){
+    let button = document.createElement("button");
+    myDiv.appendChild(button);
+    button.setAttribute("id", string1);
+    button.setAttribute("class", "btn");
+    let el = document.createElement("i");
+    button.appendChild(el);
+    el.setAttribute("class", string2);
+    el.setAttribute("type", "button");
 }

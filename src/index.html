@@ -23,11 +23,11 @@
             <input type="text" id="textInput" name="textInput" placeholder="Enter task">
             <select name="prioritySelector" id="prioritySelector">
                 <option value="">--level of priority--</option>
-                <option value="one">1</option>
-                <option value="two">2</option>
-                <option value="three">3</option>
-                <option value="four">4</option>
-                <option value="five">5</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
             </select>
             <label for="dueDate">Due by:</label>
             <input type="date" id="dueDate" name="task-dueDate" value="" min="2020-01-01" max="2020-12-31">
@@ -35,34 +35,10 @@
         </section>
         <br>
         <section id="view-section">
-                <div div class="todoContainer">
-                    <ul id="taskProperties">
-                        <div class="priority">1</div>
-                        <div class="todoCreatedAt"> 2020-06-18 11:51:12</div>
-                        <div class="todoDueDate">2020-08-18 01:31:42</div>
-                        <div class="todoText">todo text</div>
-                        <div>
-                            <button id="removeButton" class="btn"><i class="fa fa-trash" type="button"></i></button>
-                            <button id="completeButton" class="btn"><i class="fa fa-check" type="button"></i></button>
-                        </div>
-                    </ul>
-                </div>
-                <div div class="todoContainer">
-                    <ul id="taskProperties">
-                        <div class="priority">1</div>
-                        <div class="todoCreatedAt"> 2020-06-18 11:51:12</div>
-                        <div class="todoDueDate">2020-08-18 01:31:42</div>
-                        <div class="todoText">todo texdddddddddddddd</div>
-                        <div>
-                            <button id="removeButton" class="btn"><i class="fa fa-trash" type="button"></i></button>
-                            <button id="completeButton" class="btn"><i class="fa fa-check" type="button"></i></button>
-                        </div>
-                    </ul>
-                </div>
         </section>
         <section id="completed-section">
             <h2><u>Tasks Completed:</u></h2>
-                <div div class="todoContainer">
+                <div div class="todoContainer" name="1">
                     <ul id="taskProperties">
                         <div class="priority">1</div>
                         <div class="todoCreatedAt"> 2020-06-18 11:51:12</div>
@@ -70,7 +46,7 @@
                         <div class="todoText">todo text</div>
                     </ul>
                 </div>
-                <div div class="todoContainer">
+                <div div class="todoContainer" name="2">
                     <ul id="taskProperties">
                         <div class="priority">1</div>
                         <div class="todoCreatedAt"> 2020-06-18 11:51:12</div>
