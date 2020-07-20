@@ -3,8 +3,12 @@ let completedTasks = [];
 function loadTasks(openTasks) {
     section = document.getElementById("view-section");
 }
-addBtn = document.getElementById('addButton');
+let addBtn = document.getElementById('addButton');
 addBtn.addEventListener('click',addTask);
+let sortBtn = document.getElementById('sortButton');
+sortBtn.addEventListener('click',sortByPriority);
+sortBtn = document.getElementById('sortByDate');
+sortBtn.addEventListener('click',sortByDueDate);
 let counter = document.getElementById('counter');
 counter.innerHTML = openTasks.length;
 
@@ -76,9 +80,7 @@ function addToList(toAdd, i, sectionStr){
     mainDiv.setAttribute("name", i);
     section_child.appendChild(item);
     item.appendChild(mainDiv);
-    // let lst = document.createElement("ul");
     mainDiv.setAttribute("id", "taskProperties");
-    // mainDiv.appendChild(lst);
     createPropDiv(toAdd.priority, mainDiv, "todoPriority");
     createPropDiv(toAdd.date, mainDiv, "todoCreatedAt");
     if (toAdd.dueDate ===  ''){
@@ -151,4 +153,26 @@ function updateIndexes(){
         console.log(arr[i].childNodes[0]);
     }
     console.log(arr);
+}
+
+function sortByPriority(event){
+    openTasks.sort((a, b) => (a.priority >= b.priority) ? 1 : -1);
+    reArrangeLst();
+}
+
+function sortByDueDate(){
+    openTasks.sort((a, b) => (a.dueDate.split('-')[1] > b.dueDate.split('-')[1]) ? -1 : (a.dueDate.split('-')[1] === b.dueDate.split('-')[1]) ? 
+    ((a.dueDate.split('-')[2] >= b.dueDate.split('-')[2]) ? -1 : 1) : 1);
+    reArrangeLst();
+}
+
+function reArrangeLst(){
+    let myLst = document.getElementById('view-section').children[0];
+    myLst.remove();
+    let newLst = document.createElement("ul");
+    let section =  document.getElementById('view-section');
+    section.appendChild(newLst);
+    for (let i = 0; i < openTasks.length; i++){
+        addToList(openTasks[i], i, "view-section");
+    }
 }
