@@ -110,6 +110,7 @@ function addToList(toAdd, i, sectionStr){
     }
     createPropDiv(toAdd.text, mainDiv, "todoText");
     if (sectionStr === "view-section"){
+        checkDueDateClose(item, toAdd);
         let myDiv = document.createElement("div");
         createButton(myDiv, "removeButton", "fa fa-trash");
         createButton(myDiv, "completeButton", "fa fa-check");
@@ -205,8 +206,8 @@ function sortByDueDate(){
             i++;
         }
     }
-    data.openTasks.sort((a, b) => (a.dueDate.split('-')[1] > b.dueDate.split('-')[1]) ? -1 : (a.dueDate.split('-')[1] === b.dueDate.split('-')[1]) ? 
-    ((a.dueDate.split('-')[2] > b.dueDate.split('-')[2]) ? -1 : 1) : 1);
+    data.openTasks.sort((a, b) => (a.dueDate.split('-')[1] < b.dueDate.split('-')[1]) ? -1 : (a.dueDate.split('-')[1] === b.dueDate.split('-')[1]) ? 
+    ((a.dueDate.split('-')[2] < b.dueDate.split('-')[2]) ? -1 : 1) : 1);
     reArrangeLst();
 }
 
@@ -229,3 +230,22 @@ function deleteLst(){
     reArrangeLst();
     localStorage.setItem('todoList', JSON.stringify(data));
 }
+
+// if the due date is within 3 days colors the task red
+function checkDueDateClose(li, task){
+    let taskDate = task.dueDate.split('-');
+    if (task.dueDate === ""){
+        return;
+    }
+    let month = parseInt(taskDate[1]);
+    let date1 = new Date();
+    var date2 = new Date();
+    date2.setFullYear(taskDate[0], month - 1, taskDate[2]);
+    console.log(date2);
+    const ONE_DAY = 1000 * 60 * 60 * 24;
+    const differenceMs = Math.abs(date1 - date2);
+    let numDays = Math.round(differenceMs / ONE_DAY);
+    if (numDays <= 3){
+        li.style.backgroundColor = "hsl(22, 100%, 63%)";
+    }
+    }
