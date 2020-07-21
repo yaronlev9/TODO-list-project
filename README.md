@@ -115,7 +115,7 @@ $ npm run test
  - Add link to the PR you created in your private repo [here](https://docs.google.com/spreadsheets/d/1P9_YDGqIqmV10fvTmIXc_AGV0_ycI2aBFo2h5zprUMI/edit#gid=1903529310), fill the other details
  
  my submit:
-   -![alt text](./ui-testing-recording.gif
+   ![alt text](./ui-testing-recording.gif)
    - to add video
    - https://todo-list-project-git-my-version-for-solution.yaronlev9.vercel.app/ link to my deployed app.
    # Bonuses:
