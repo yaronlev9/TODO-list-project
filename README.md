@@ -116,9 +116,8 @@ $ npm run test
  
  my submit:
    ![alt text](./ui-testing-recording.gif)
-   - to add video
-   - https://todo-list-project-git-my-version-for-solution.yaronlev9.vercel.app/ link to my deployed app.
-   # Bonuses:
+   - https://drive.google.com/file/d/1nanLXyWoKlrkkP-4D-NNytd6HovSVxQ5/view?usp=sharing
+   - https://todo-list-project-git-my-version-for-solution.yaronlev9.vercel.app/
    - i have added the ability to add a due date for the task, and a button that sorts the tasks based on the due dates.
    - added a clear button that deletes all the uncompleted tasks.
    - for every uncompleted tasks i added 2 more buttons one to remove from list and one to mark as completed and the task moves to the completed list.
