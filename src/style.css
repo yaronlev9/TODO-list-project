@@ -67,7 +67,7 @@ main{
 
 #taskProperties > [class="todoText"] {
     float: left;
-    width: 350px;
+    width: 300px;
     overflow: auto;
 }
 
@@ -138,12 +138,14 @@ ul li {
     display:inline-block;
     border-top:2px solid hsl(129, 25%, 77%);
     padding:20px;
-    margin-bottom: 10px;
-    margin-left: 5px;
+    margin-bottom: auto;
+    margin-left: auto;
 }
 
 ul li:hover{
     transform: scale(1.01);
+    position: relative; 
+    left: 5px;
 }
 
 #clearList {
