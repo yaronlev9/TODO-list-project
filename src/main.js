@@ -54,17 +54,18 @@ function formatDate(date){
     let newDate = `${date.getFullYear()}-`;
     let month = date.getMonth();
     if (month < 10){
-        newDate += `0${date.getMonth()}-`;
+        newDate += `0${date.getMonth() + 1}-`;
     }
     else{
-        newDate += `${date.getMonth()}-`;
+        newDate += `${date.getMonth() + 1}-`;
     }
-    let day = date.getDay();
-    if (month < 10){
-        newDate += `0${date.getDay()} `;
+    let day = date.getDate();
+    console.log(day);
+    if (day < 10){
+        newDate += `0${date.getDate()} `;
     }
     else{
-        newDate += `${date.getDay()} `;
+        newDate += `${date.getDate()} `;
     }
     let hours = date.getHours();
     if (hours < 10){
@@ -162,7 +163,6 @@ function addToCompleteList(event){
     el.remove();
     let task = data.openTasks[index];
     data.completedTasks.push(task);
-    console.log(data.completedTasks);
     addToList(task, data.completedTasks.length, "completed-section"); 
     data.openTasks.splice(index, 1);
     counter.innerText = data.openTasks.length;
@@ -241,7 +241,6 @@ function checkDueDateClose(li, task){
     let date1 = new Date();
     var date2 = new Date();
     date2.setFullYear(taskDate[0], month - 1, taskDate[2]);
-    console.log(date2);
     const ONE_DAY = 1000 * 60 * 60 * 24;
     const differenceMs = Math.abs(date1 - date2);
     let numDays = Math.round(differenceMs / ONE_DAY);
