@@ -113,5 +113,20 @@ $ npm run test
  - [Create a Pull Request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request) from the new brunch you created in the Instructions into master in your duplicated repository
  - add Github usernames: GuySerfaty, fainir and tomeryp as [collaborators](https://docs.github.com/en/github/setting-up-and-managing-your-github-user-account/inviting-collaborators-to-a-personal-repository) to your imported repo.
  - Add link to the PR you created in your private repo [here](https://docs.google.com/spreadsheets/d/1P9_YDGqIqmV10fvTmIXc_AGV0_ycI2aBFo2h5zprUMI/edit#gid=1903529310), fill the other details
-
+ 
+ my submit:
+   ![alt text](./ui-testing-recording.gif)
+   - to add video
+   - https://todo-list-project-git-my-version-for-solution.yaronlev9.vercel.app/ link to my deployed app.
+   # Bonuses:
+   - i have added the ability to add a due date for the task, and a button that sorts the tasks based on the due dates.
+   - added a clear button that deletes all the uncompleted tasks.
+   - for every uncompleted tasks i added 2 more buttons one to remove from list and one to mark as completed and the task moves to the completed list.
+   - tasks that their due dates are within 3 days are marked with reddish color.
+   - the buttons have some nice hover configurations.
+   - i added the use of local storage, the tasks are saved in the local storage so the lists are not removed when exiting the browser.
+   - you don't have to add the due date, the section will  be filled with the string "NA" and will not effect the sort methods.
+   
  GOOD LUCK!
+ 
+   
